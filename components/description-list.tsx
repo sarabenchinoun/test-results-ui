@@ -31,7 +31,7 @@ export function DescriptionTerm({
 			{...props}
 			className={cn(
 				className,
-				" col-start-1 flex items-center gap-x-3 border-zinc-950/5 border-t pt-3 text-zinc-500 first:border-none sm:border-zinc-950/5 sm:border-t sm:py-3 dark:border-white/5 dark:text-zinc-400 sm:dark:border-white/5",
+				"col-start-1 flex items-center gap-x-3 border-zinc-950/5 border-t pt-3 text-zinc-500 first:border-none sm:border-zinc-950/5 sm:border-t sm:py-3 dark:border-white/5 dark:text-zinc-400 sm:dark:border-white/5",
 			)}
 		>
 			{icon}

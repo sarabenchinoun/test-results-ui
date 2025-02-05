@@ -1,9 +1,9 @@
 type ScreenServiceStatus = "FINAL";
 type TestType = "CTNG2" | "SYP" | "HIV" | "FINAL";
-type ScreenMetaDataGroup = "order" | "service-user";
-type ScreenMetaDataType = "string" | "date" | "number";
+export type ScreenMetaDataGroup = "order" | "service-user";
+export type ScreenMetaDataType = "string" | "date" | "number";
 export type ScreenStatus = "received" | "completed" | "pending-return";
-type ScreenServiceLevel = "abnormal" | "normal" | "warning" | "issue";
+export type ScreenServiceLevel = "abnormal" | "normal" | "warning" | "issue";
 type ComponentType = "HIV" | "FINAL" | "SYPHILIS" | "CHLAMYDIA" | "GONORRHOEA";
 
 type SampleType =
@@ -12,7 +12,7 @@ type SampleType =
 	| "vaginal-swab"
 	| "fingerprick-blood";
 
-type ScreenMetaDataKey =
+export type ScreenMetaDataKey =
 	| "Age"
 	| "SkuCode"
 	| "LastName"
@@ -78,7 +78,7 @@ export type ScreenDetailsResponse = {
 	serviceRequests: ScreenServiceRequest[];
 };
 
-type ScreenMetaData = {
+export type ScreenMetaData = {
 	value: string;
 	key: ScreenMetaDataKey;
 	group: ScreenMetaDataGroup;

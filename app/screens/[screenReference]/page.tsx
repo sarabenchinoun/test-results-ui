@@ -2,6 +2,7 @@ import { getById } from "@/backend/api";
 import { notFound } from "next/navigation";
 import * as React from "react";
 
+import { Badge } from "@/components/badge";
 import { Card, CardHeader } from "@/components/card";
 import { Container } from "@/components/container";
 import {
@@ -13,7 +14,13 @@ import { Heading, Subheading } from "@/components/heading";
 import { Icon } from "@/components/icon";
 import { StatusIndicator } from "@/components/status-indicator";
 import { Text } from "@/components/text";
-import { formatDate, getScreenStatusTheme } from "@/utils/helpers";
+import { cn } from "@/utils/cn";
+import {
+	formatDate,
+	getScreenStatusTheme,
+	getServiceLevelIcon,
+	getServiceLevelTheme,
+} from "@/utils/helpers";
 
 interface ScreenProps {
 	params: Promise<{ screenReference: string }>;
@@ -68,20 +75,14 @@ export default async function Screen({ params }: ScreenProps) {
 }
 
 async function ScreenStatus({ screenReference }: { screenReference: string }) {
-	const screen = await getById(screenReference);
-	if (screen.status === 404) {
-		notFound();
-	}
+	const { data } = await getById(screenReference);
 
-	if (screen.status === 500) {
-		throw new Error(screen.message);
-	}
 	return (
 		<div className="mt-1 flex items-center gap-x-1.5">
-			{screen.data?.status && (
-				<StatusIndicator theme={getScreenStatusTheme(screen.data.status)} />
-			)}{" "}
-			<p className="text-gray-500 text-sm/5">{screen.data?.status}</p>
+			{data?.status && (
+				<StatusIndicator theme={getScreenStatusTheme(data.status)} />
+			)}
+			<p className="text-gray-500 text-sm/5">{data?.status}</p>
 		</div>
 	);
 }
@@ -96,59 +97,71 @@ async function UserResults({ screenReference }: { screenReference: string }) {
 	if (screen.status === 500) {
 		throw new Error(screen.message);
 	}
-	const data = screen.data?.serviceRequests;
+	const serviceRequests = screen.data?.serviceRequests ?? [];
 
-	return (
-		<>
-			{data?.map((request) => (
-				<Card key={request.serviceRequestId} className="mt-2">
-					<CardHeader>
-						<Subheading>{request.title}</Subheading>
-						<Text>Sample ID: #{request.sampleId}</Text>
-					</CardHeader>
-					<Text className="px-4 py-3">{request.description}</Text>
-					{request.results?.length > 0 &&
-						request.results.map((result) => (
-							<div
-								key={result.resultId}
-								className="m-3 rounded-md border-x border-x-gray-200 border-t-4 border-t-danger-solid-bg border-b border-b-gray-200 p-4"
-							>
-								<div className="flex items-center justify-between text-gray-500 text-sm">
-									<div>
-										<Subheading level={3}>{result.status} RESULT</Subheading>
-										<Text>Sample: {request.sampleType}</Text>
-									</div>
-									<div className="flex items-center gap-2">
-										<span className="inline-flex items-center gap-x-1.5 rounded-md bg-danger-bg px-2 py-1 font-medium text-danger-text text-xs">
-											{result.level}
-										</span>
-										<span className="inline-flex items-center gap-x-1.5 rounded-md bg-danger-solid-bg px-2 py-1 font-medium text-danger-solid-text text-xs">
-											<Icon name="warning" />
-											{result.caseCode}
-										</span>
-									</div>
+	if (!serviceRequests.length) {
+		return <Text>No test bookings found</Text>;
+	}
+
+	return serviceRequests.map((request) => (
+		<Card key={request.serviceRequestId} className="mt-2">
+			<CardHeader>
+				<Subheading>{request.title}</Subheading>
+				<Text>Sample ID: #{request.sampleId}</Text>
+			</CardHeader>
+			<Text className="px-4 py-3">{request.description}</Text>
+			{request.results?.length > 0 &&
+				request.results.map((result) => {
+					const cardTheme = getServiceLevelTheme(result.level);
+					return (
+						<div
+							key={result.resultId}
+							className={cn(
+								"m-3 rounded-md border border-gray-200 border-t-4 p-4",
+								{
+									"border-t-gray-solid-bg": cardTheme === "gray",
+									"border-t-danger-solid-bg": cardTheme === "danger",
+									"border-t-warning-solid-bg": cardTheme === "warning",
+									"border-t-success-solid-bg": cardTheme === "success",
+									"border-t-info-solid-bg": cardTheme === "info",
+								},
+							)}
+						>
+							<div className="flex items-center justify-between text-gray-500 text-sm">
+								<div>
+									<Subheading level={3}>{result.status} RESULT</Subheading>
+									<Text>Sample: {request.sampleType}</Text>
 								</div>
-								<div className="mt-4 flex gap-x-4 text-gray-500 text-sm">
-									<div>
-										Observation:{" "}
-										{result.observationDate &&
-											formatDate({ date: result.observationDate })}
-									</div>
-									<div>
-										Verification:{" "}
-										{result.verificationDate &&
-											formatDate({ date: result.verificationDate })}
-									</div>
-								</div>
-								<div className="mt-4 whitespace-pre-line">
-									{result.description && <Text>{result.description}</Text>}
+								<div className="flex items-center gap-2">
+									<Badge variant="ghost" theme={cardTheme}>
+										{result.level}
+									</Badge>
+									<Badge variant="solid" theme={cardTheme}>
+										<Icon name={getServiceLevelIcon(result.level)} />
+										{result.caseCode}
+									</Badge>
 								</div>
 							</div>
-						))}
-				</Card>
-			))}
-		</>
-	);
+							<div className="mt-4 flex gap-x-4 text-gray-500 text-sm">
+								<div>
+									Observation:{" "}
+									{result.observationDate &&
+										formatDate({ date: result.observationDate })}
+								</div>
+								<div>
+									Verification:{" "}
+									{result.verificationDate &&
+										formatDate({ date: result.verificationDate })}
+								</div>
+							</div>
+							<div className="mt-4 whitespace-pre-line">
+								{result.description && <Text>{result.description}</Text>}
+							</div>
+						</div>
+					);
+				})}
+		</Card>
+	));
 }
 
 interface RecordSummaryProps {

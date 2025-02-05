@@ -5,6 +5,8 @@ import {
 	BuildingOffice,
 	Calendar,
 	CalendarCheck,
+	CheckCircle,
+	Circle,
 	Dot,
 	DotOutline,
 	FirstAidKit,
@@ -29,6 +31,8 @@ const Icons = {
 	hourglass: HourglassMedium,
 	baby: Baby,
 	warning: WarningCircle,
+	"check-circle": CheckCircle,
+	"x-circle": Circle,
 };
 
 interface IconProps extends PhosphorIconProps {
@@ -40,4 +44,4 @@ function Icon({ name, className, ...props }: IconProps) {
 	return <Comp className={cn("shrink-0", className)} {...props} />;
 }
 
-export { Icon };
+export { Icon, type IconProps };
