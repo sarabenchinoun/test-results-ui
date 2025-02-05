@@ -1,16 +1,31 @@
-"use client"; // Error boundaries must be Client Components
+"use client";
+
+import { Header, HeaderTitle } from "@/components/header";
+import { Layout, LayoutContent } from "@/components/layout";
 
 export default function ErrorPage({
-	error,
 	reset,
-}: { error: Error; reset: () => void }) {
+}: {
+	error: Error & { digest?: string };
+	reset: () => void;
+}) {
 	return (
-		<div>
-			<h2>Something went wrong!</h2>
-			<p className="mt-2 mt-2 text-gra">{error.message}</p>
-			<button type="button" onClick={reset}>
-				Try again
-			</button>
-		</div>
+		<Layout>
+			<Header>
+				<HeaderTitle>Error</HeaderTitle>
+			</Header>
+			<LayoutContent>
+				<div className="grid place-items-center overflow-hidden bg-white py-8 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+					<div className="text-center">
+						<p>Ooops...Something went wrong</p>
+
+						<p>Please try again</p>
+						<button type="button" onClick={() => reset()}>
+							Try again
+						</button>
+					</div>
+				</div>
+			</LayoutContent>
+		</Layout>
 	);
 }

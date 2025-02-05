@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 import type { ScreenDetailsResponse } from "@/backend/contract";
 import { Badge } from "@/components/badge";
 import { Card, CardHeader } from "@/components/card";
-import { Container } from "@/components/container";
 import {
 	DescriptionDetails,
 	DescriptionList,
 	DescriptionTerm,
 } from "@/components/description-list";
+import { Header, HeaderTitle } from "@/components/header";
 import { Heading, Subheading } from "@/components/heading";
 import { Icon } from "@/components/icon";
+import { Layout, LayoutContent } from "@/components/layout";
 import { StatusIndicator } from "@/components/status-indicator";
 import { Text } from "@/components/text";
 import { cn } from "@/utils/cn";
@@ -40,13 +41,15 @@ export default async function Screen({ params }: ScreenProps) {
 
 	const screenData = await fetchScreenData(screenReference);
 	return (
-		<div className="py-10">
-			<Container as="header" className="flex items-center gap-x-1.5">
-				<Heading>{screenReference}</Heading>
-				{/* fix typing here by type validation on the api return */}
-				<RecordStatus status={screenData.status} />
-			</Container>
-			<Container as="main" className="mt-6">
+		<Layout>
+			<Header>
+				<div className="flex items-center gap-2">
+					<HeaderTitle>{screenReference}</HeaderTitle>
+					<ScreenStatus status={screenData.status} />
+				</div>
+			</Header>
+
+			<LayoutContent>
 				<div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
 					{/* Left column */}
 					<div className="grid grid-cols-1 gap-4 lg:col-span-1">
@@ -68,12 +71,12 @@ export default async function Screen({ params }: ScreenProps) {
 						</section>
 					</div>
 				</div>
-			</Container>
-		</div>
+			</LayoutContent>
+		</Layout>
 	);
 }
 
-async function RecordStatus({
+async function ScreenStatus({
 	status,
 }: { status: ScreenDetailsResponse["status"] }) {
 	if (!status) return null;
