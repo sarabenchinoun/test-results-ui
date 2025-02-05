@@ -1,3 +1,4 @@
+import type { ScreenStatus } from "@/backend/contract";
 import { format } from "date-fns";
 
 export function formatDate({ date }: { date: Date | string }) {
@@ -10,5 +11,18 @@ export function formatDate({ date }: { date: Date | string }) {
 	} catch (error) {
 		console.error("Date parsing failed:", error);
 		return "";
+	}
+}
+
+export function getScreenStatusTheme(status: ScreenStatus) {
+	switch (status) {
+		case "received":
+			return "info";
+		case "completed":
+			return "success";
+		case "pending-return":
+			return "warning";
+		default:
+			return "gray";
 	}
 }

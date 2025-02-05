@@ -2,7 +2,7 @@ type ScreenServiceStatus = "FINAL";
 type TestType = "CTNG2" | "SYP" | "HIV" | "FINAL";
 type ScreenMetaDataGroup = "order" | "service-user";
 type ScreenMetaDataType = "string" | "date" | "number";
-type ScreenStatus = "received" | "completed" | "pending-return";
+export type ScreenStatus = "received" | "completed" | "pending-return";
 type ScreenServiceLevel = "abnormal" | "normal" | "warning" | "issue";
 type ComponentType = "HIV" | "FINAL" | "SYPHILIS" | "CHLAMYDIA" | "GONORRHOEA";
 

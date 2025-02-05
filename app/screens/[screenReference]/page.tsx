@@ -11,24 +11,30 @@ import {
 } from "@/components/description-list";
 import { Heading, Subheading } from "@/components/heading";
 import { Icon } from "@/components/icon";
-import { StatusBadge } from "@/components/status-badge";
+import { StatusIndicator } from "@/components/status-indicator";
 import { Text } from "@/components/text";
-import { formatDate } from "@/utils/helpers";
+import { formatDate, getScreenStatusTheme } from "@/utils/helpers";
 
 interface ScreenProps {
-	params: { screenReference: string };
+	params: Promise<{ screenReference: string }>;
 }
 
 export default async function Screen({ params }: ScreenProps) {
-	const { screenReference } = params;
+	const { screenReference } = await params;
+
 	return (
 		<>
 			<div className="py-10">
-				<Container as="header" className="flex gap-x-1.5">
+				<Container as="header" className="flex items-center gap-x-1.5">
 					<Heading>{screenReference}</Heading>
-					<StatusBadge status="completed" />
-				</Container>
-
+					<React.Suspense
+						fallback={
+							<div className="mt-1 h-4 w-24 animate-pulse rounded bg-gray-200" />
+						}
+					>
+						<ScreenStatus screenReference={screenReference} />
+					</React.Suspense>
+				</Container>{" "}
 				<Container as="main" className="mt-6">
 					<div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
 						{/* Left column */}
@@ -58,6 +64,25 @@ export default async function Screen({ params }: ScreenProps) {
 				</Container>
 			</div>
 		</>
+	);
+}
+
+async function ScreenStatus({ screenReference }: { screenReference: string }) {
+	const screen = await getById(screenReference);
+	if (screen.status === 404) {
+		notFound();
+	}
+
+	if (screen.status === 500) {
+		throw new Error(screen.message);
+	}
+	return (
+		<div className="mt-1 flex items-center gap-x-1.5">
+			{screen.data?.status && (
+				<StatusIndicator theme={getScreenStatusTheme(screen.data.status)} />
+			)}{" "}
+			<p className="text-gray-500 text-sm/5">{screen.data?.status}</p>
+		</div>
 	);
 }
 
