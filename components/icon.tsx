@@ -1,5 +1,18 @@
 import type { IconProps as PhosphorIconProps } from "@phosphor-icons/react";
-import { Dot, DotOutline, FirstAidKit } from "@phosphor-icons/react/dist/ssr";
+import {
+	Baby,
+	Barcode,
+	BuildingOffice,
+	Calendar,
+	CalendarCheck,
+	Dot,
+	DotOutline,
+	FirstAidKit,
+	HourglassMedium,
+	Tag,
+	User,
+	WarningCircle,
+} from "@phosphor-icons/react/dist/ssr";
 
 import { cn } from "@/utils/cn";
 
@@ -7,6 +20,15 @@ const Icons = {
 	dot: Dot,
 	"dot-outline": DotOutline,
 	"first-aid-kit": FirstAidKit,
+	tag: Tag,
+	barcode: Barcode,
+	building: BuildingOffice,
+	calendar: Calendar,
+	"calendar-check": CalendarCheck,
+	user: User,
+	hourglass: HourglassMedium,
+	baby: Baby,
+	warning: WarningCircle,
 };
 
 interface IconProps extends PhosphorIconProps {
