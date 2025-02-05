@@ -85,73 +85,6 @@ async function RecordStatus({
 	);
 }
 
-function ServiceRequests({ data }: { data: ScreenDetailsResponse }) {
-	const { serviceRequests } = data;
-	if (!serviceRequests.length) {
-		return <Text>No test bookings found</Text>;
-	}
-
-	return serviceRequests.map((request) => (
-		<Card key={request.serviceRequestId} className="mt-2">
-			<CardHeader>
-				<Subheading>{request.title}</Subheading>
-				<Text>Sample ID: #{request.sampleId}</Text>
-			</CardHeader>
-			<Text className="px-4 py-3">{request.description}</Text>
-			{request.results?.length > 0 &&
-				request.results.map((result) => {
-					const cardTheme = getServiceLevelTheme(result.level);
-					return (
-						<div
-							key={result.resultId}
-							className={cn(
-								"m-3 rounded-md border border-gray-200 border-t-4 p-4",
-								{
-									"border-t-gray-solid-bg": cardTheme === "gray",
-									"border-t-danger-solid-bg": cardTheme === "danger",
-									"border-t-warning-solid-bg": cardTheme === "warning",
-									"border-t-success-solid-bg": cardTheme === "success",
-									"border-t-info-solid-bg": cardTheme === "info",
-								},
-							)}
-						>
-							<div className="flex items-center justify-between text-gray-500 text-sm">
-								<div>
-									<Subheading level={3}>{result.status} RESULT</Subheading>
-									<Text>Sample: {request.sampleType}</Text>
-								</div>
-								<div className="flex items-center gap-2">
-									<Badge variant="ghost" theme={cardTheme}>
-										{result.level}
-									</Badge>
-									<Badge variant="solid" theme={cardTheme}>
-										<Icon name={getServiceLevelIcon(result.level)} />
-										{result.caseCode}
-									</Badge>
-								</div>
-							</div>
-							<div className="mt-4 flex gap-x-4 text-gray-500 text-sm">
-								<div>
-									Observation:{" "}
-									{result.observationDate &&
-										formatDate({ date: result.observationDate })}
-								</div>
-								<div>
-									Verification:{" "}
-									{result.verificationDate &&
-										formatDate({ date: result.verificationDate })}
-								</div>
-							</div>
-							<div className="mt-4 whitespace-pre-line">
-								{result.description && <Text>{result.description}</Text>}
-							</div>
-						</div>
-					);
-				})}
-		</Card>
-	));
-}
-
 async function RecordSummary({ data }: { data: ScreenDetailsResponse }) {
 	function getMetaDataValue(key: string) {
 		return (
@@ -231,4 +164,71 @@ async function RecordSummary({ data }: { data: ScreenDetailsResponse }) {
 			</DescriptionList>
 		</Card>
 	);
+}
+
+function ServiceRequests({ data }: { data: ScreenDetailsResponse }) {
+	const { serviceRequests } = data;
+	if (!serviceRequests.length) {
+		return <Text>No test bookings found</Text>;
+	}
+
+	return serviceRequests.map((request) => (
+		<Card key={request.serviceRequestId} className="mt-2">
+			<CardHeader>
+				<Subheading>{request.title}</Subheading>
+				<Text>Sample ID: #{request.sampleId}</Text>
+			</CardHeader>
+			<Text className="px-4 py-3">{request.description}</Text>
+			{request.results?.length > 0 &&
+				request.results.map((result) => {
+					const cardTheme = getServiceLevelTheme(result.level);
+					return (
+						<div
+							key={result.resultId}
+							className={cn(
+								"m-3 rounded-md border border-gray-200 border-t-4 p-4",
+								{
+									"border-t-gray-solid-bg": cardTheme === "gray",
+									"border-t-danger-solid-bg": cardTheme === "danger",
+									"border-t-warning-solid-bg": cardTheme === "warning",
+									"border-t-success-solid-bg": cardTheme === "success",
+									"border-t-info-solid-bg": cardTheme === "info",
+								},
+							)}
+						>
+							<div className="flex items-center justify-between text-gray-500 text-sm">
+								<div>
+									<Subheading level={3}>{result.status} RESULT</Subheading>
+									<Text>Sample: {request.sampleType}</Text>
+								</div>
+								<div className="flex items-center gap-2">
+									<Badge variant="ghost" theme={cardTheme}>
+										{result.level}
+									</Badge>
+									<Badge variant="solid" theme={cardTheme}>
+										<Icon name={getServiceLevelIcon(result.level)} />
+										{result.caseCode}
+									</Badge>
+								</div>
+							</div>
+							<div className="mt-4 flex gap-x-4 text-gray-500 text-sm">
+								<div>
+									Observation:{" "}
+									{result.observationDate &&
+										formatDate({ date: result.observationDate })}
+								</div>
+								<div>
+									Verification:{" "}
+									{result.verificationDate &&
+										formatDate({ date: result.verificationDate })}
+								</div>
+							</div>
+							<div className="mt-4 whitespace-pre-line">
+								{result.description && <Text>{result.description}</Text>}
+							</div>
+						</div>
+					);
+				})}
+		</Card>
+	));
 }
