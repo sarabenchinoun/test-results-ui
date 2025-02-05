@@ -26,7 +26,10 @@
 				"useSortedClasses": {
 					"level": "warn",
 					"fix": "safe",
-					"options": {}
+					"options": {
+						// This is to make sure I get class sorting on my class helper functions
+						"functions": ["cn"]
+					}
 				}
 			},
 			// This setting shows error when it detects unused imports and variables
