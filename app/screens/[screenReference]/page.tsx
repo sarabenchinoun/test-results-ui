@@ -1,7 +1,7 @@
 import { getById } from "@/backend/api";
 import { notFound } from "next/navigation";
-import * as React from "react";
 
+import type { ScreenDetailsResponse } from "@/backend/contract";
 import { Badge } from "@/components/badge";
 import { Card, CardHeader } from "@/components/card";
 import { Container } from "@/components/container";
@@ -26,79 +26,67 @@ interface ScreenProps {
 	params: Promise<{ screenReference: string }>;
 }
 
+async function fetchScreenData(screenReference: string) {
+	const screen = await getById(screenReference);
+
+	if (screen.status === 404) notFound();
+	if (screen.status === 500 || !screen.data) throw new Error(screen.message);
+
+	return screen.data;
+}
+
 export default async function Screen({ params }: ScreenProps) {
 	const { screenReference } = await params;
 
+	const screenData = await fetchScreenData(screenReference);
 	return (
-		<>
-			<div className="py-10">
-				<Container as="header" className="flex items-center gap-x-1.5">
-					<Heading>{screenReference}</Heading>
-					<React.Suspense
-						fallback={
-							<div className="mt-1 h-4 w-24 animate-pulse rounded bg-gray-200" />
-						}
-					>
-						<ScreenStatus screenReference={screenReference} />
-					</React.Suspense>
-				</Container>{" "}
-				<Container as="main" className="mt-6">
-					<div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
-						{/* Left column */}
-						<div className="grid grid-cols-1 gap-4 lg:col-span-1">
-							<section aria-labelledby="section-1-title">
-								<Heading id="section-1-title" level={2}>
-									Record Summary
-								</Heading>
-								<React.Suspense fallback={<p>Loading...</p>}>
-									<RecordSummary screenReference={screenReference} />
-								</React.Suspense>
-							</section>
-						</div>
-
-						{/* Right column */}
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2">
-							<section aria-labelledby="section-2-title">
-								<Heading level={2} id="section-2-title">
-									Test Bookings
-								</Heading>
-								<React.Suspense fallback={<p>Loading...</p>}>
-									<UserResults screenReference={screenReference} />
-								</React.Suspense>
-							</section>
-						</div>
+		<div className="py-10">
+			<Container as="header" className="flex items-center gap-x-1.5">
+				<Heading>{screenReference}</Heading>
+				{/* fix typing here by type validation on the api return */}
+				<RecordStatus status={screenData.status} />
+			</Container>
+			<Container as="main" className="mt-6">
+				<div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
+					{/* Left column */}
+					<div className="grid grid-cols-1 gap-4 lg:col-span-1">
+						<section aria-labelledby="section-1-title">
+							<Heading id="section-1-title" level={2}>
+								Record Summary
+							</Heading>
+							<RecordSummary data={screenData} />
+						</section>
 					</div>
-				</Container>
-			</div>
-		</>
-	);
-}
 
-async function ScreenStatus({ screenReference }: { screenReference: string }) {
-	const { data } = await getById(screenReference);
-
-	return (
-		<div className="mt-1 flex items-center gap-x-1.5">
-			{data?.status && (
-				<StatusIndicator theme={getScreenStatusTheme(data.status)} />
-			)}
-			<p className="text-gray-500 text-sm/5">{data?.status}</p>
+					{/* Right column */}
+					<div className="grid grid-cols-1 gap-4 lg:col-span-2">
+						<section aria-labelledby="section-2-title">
+							<Heading level={2} id="section-2-title">
+								Test Bookings
+							</Heading>
+							<ServiceRequests data={screenData} />
+						</section>
+					</div>
+				</div>
+			</Container>
 		</div>
 	);
 }
 
-async function UserResults({ screenReference }: { screenReference: string }) {
-	const screen = await getById(screenReference);
+async function RecordStatus({
+	status,
+}: { status: ScreenDetailsResponse["status"] }) {
+	if (!status) return null;
+	return (
+		<div className="mt-1 flex items-center gap-x-1.5">
+			<StatusIndicator theme={getScreenStatusTheme(status)} />
+			<p className="text-gray-500 text-sm/5">{status}</p>
+		</div>
+	);
+}
 
-	if (screen.status === 404) {
-		notFound();
-	}
-
-	if (screen.status === 500) {
-		throw new Error(screen.message);
-	}
-	const serviceRequests = screen.data?.serviceRequests ?? [];
-
+function ServiceRequests({ data }: { data: ScreenDetailsResponse }) {
+	const { serviceRequests } = data;
 	if (!serviceRequests.length) {
 		return <Text>No test bookings found</Text>;
 	}
@@ -164,22 +152,7 @@ async function UserResults({ screenReference }: { screenReference: string }) {
 	));
 }
 
-interface RecordSummaryProps {
-	screenReference: string;
-}
-
-async function RecordSummary({ screenReference }: RecordSummaryProps) {
-	const screen = await getById(screenReference);
-	if (screen.status === 404) {
-		notFound();
-	}
-
-	if (screen.status === 500) {
-		throw new Error(screen.message);
-	}
-
-	const data = screen.data;
-
+async function RecordSummary({ data }: { data: ScreenDetailsResponse }) {
 	function getMetaDataValue(key: string) {
 		return (
 			data?.screenMetaData?.find((meta) => meta.key === key)?.value ??
