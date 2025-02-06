@@ -5,6 +5,8 @@ import { Header, HeaderTitle } from "@/components/header";
 import { Icon } from "@/components/icon";
 import { Layout, LayoutContent } from "@/components/layout";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
 export default function ErrorPage({
 	reset,
@@ -12,6 +14,13 @@ export default function ErrorPage({
 	error: Error & { digest?: string };
 	reset: () => void;
 }) {
+	const router = useRouter();
+	const reload = () => {
+		startTransition(() => {
+			router.refresh();
+			reset();
+		});
+	};
 	return (
 		<Layout>
 			<Header>
@@ -34,7 +43,7 @@ export default function ErrorPage({
 					<p>Please try again</p>
 					<button
 						type="button"
-						onClick={() => reset()}
+						onClick={reload}
 						className="mt-2 cursor-pointer text-info-text hover:underline"
 					>
 						Try again
