@@ -28,7 +28,7 @@ function DescriptionTerm({
 			{...props}
 			className={cn(
 				className,
-				"col-start-1 flex items-center gap-x-3 border-gray-950/5 border-t pt-3 text-gray-500 first:border-none sm:border-gray-950/5 sm:border-t sm:py-3",
+				"col-start-1 flex items-center gap-x-3 border-gray-200 border-t pt-3 text-gray-600 first:border-none sm:border-gray-200 sm:border-t sm:py-3",
 			)}
 		>
 			{icon}
@@ -45,7 +45,7 @@ function DescriptionDetails({
 		<dd
 			{...props}
 			className={cn(
-				"pt-1 pb-3 text-gray-950 sm:border-gray-950/5 sm:border-t sm:nth-2:border-none sm:py-3",
+				"pt-1 pb-3 text-black sm:border-gray-200 sm:border-t sm:nth-2:border-none sm:py-3",
 				className,
 			)}
 		/>

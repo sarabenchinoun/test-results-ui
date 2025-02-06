@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card } from "@/components/card";
+import { Card, CardContent, CardHeader } from "@/components/card";
 import {
 	DescriptionDetails,
 	DescriptionList,
@@ -8,15 +8,25 @@ import {
 } from "@/components/description-list";
 import { Header, HeaderTitle } from "@/components/header";
 import { Heading } from "@/components/heading";
+import { Icon } from "@/components/icon";
 import { Layout, LayoutContent } from "@/components/layout";
 import { Skeleton } from "@/components/skeleton";
+import Link from "next/link";
 import { Grid } from "./grid";
+import { ServiceRequestCardSkeleton } from "./service-request-card";
 
 export default function Loading() {
 	return (
 		<Layout>
 			<Header>
-				<HeaderTitle>Loading Screen...</HeaderTitle>
+				<Link
+					href="/screens"
+					className="flex items-center gap-1 text-gray-600 text-sm hover:underline"
+				>
+					<Icon name="caret-left" className="size-3" />
+					Back
+				</Link>
+				<HeaderTitle className="mt-1">Loading Screen...</HeaderTitle>
 			</Header>
 			<LayoutContent>
 				<Grid
@@ -25,20 +35,23 @@ export default function Loading() {
 							<Heading id="section-1-title" level={2}>
 								Loading Record Summary...
 							</Heading>
-							<Card className="mt-2 px-4 py-2">
-								<DescriptionList>
-									{Array.from({ length: 10 }).map((_, idx) => (
-										<React.Fragment key={idx}>
-											<DescriptionTerm>
-												<Skeleton className="size-5" />
-												<Skeleton className="h-5 w-20" />
-											</DescriptionTerm>
-											<DescriptionDetails>
-												<Skeleton className="h-5 w-34" />
-											</DescriptionDetails>
-										</React.Fragment>
-									))}
-								</DescriptionList>
+							<Card>
+								<CardContent className="p-6">
+									<DescriptionList>
+										{Array.from({ length: 10 }).map((_, idx) => (
+											// biome-ignore lint/suspicious/noArrayIndexKey: This is just a placeholder
+											<React.Fragment key={idx}>
+												<DescriptionTerm>
+													<Skeleton className="size-5" />
+													<Skeleton className="h-5 w-20" />
+												</DescriptionTerm>
+												<DescriptionDetails>
+													<Skeleton className="h-5 w-34" />
+												</DescriptionDetails>
+											</React.Fragment>
+										))}
+									</DescriptionList>
+								</CardContent>
 							</Card>
 						</section>
 					}
@@ -47,7 +60,18 @@ export default function Loading() {
 							<Heading level={2} id="section-2-title">
 								Loading Test Bookings...
 							</Heading>
-							<Skeleton className="mt-2 h-50 w-full" />
+							<Card>
+								<CardHeader className="flex-row items-center justify-between border-gray-200 border-b px-4 py-3">
+									<Skeleton className="h-6 w-32" />
+									<Skeleton className="h-4 w-24" />
+								</CardHeader>
+								<CardContent className="space-y-4 p-6">
+									{Array.from({ length: 3 }).map((_, idx) => (
+										// biome-ignore lint/suspicious/noArrayIndexKey: This is just a placeholder
+										<ServiceRequestCardSkeleton key={idx} />
+									))}
+								</CardContent>
+							</Card>
 						</section>
 					}
 				/>

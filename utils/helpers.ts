@@ -1,18 +1,17 @@
 import type { ScreenServiceLevel, ScreenStatus } from "@/backend/contract";
 import type { IconProps } from "@/components/icon";
-import { format } from "date-fns";
 
-export function formatDate({ date }: { date: Date | string }) {
-	if (!date) return "";
-
-	try {
-		const parsedDate = date instanceof Date ? date : new Date(date);
-
-		return format(parsedDate, "dd MMM yyyy");
-	} catch (error) {
-		console.error("Date parsing failed:", error);
-		return "";
-	}
+export function formatDate(
+	date: Date | string | number,
+	options: Intl.DateTimeFormatOptions = {},
+) {
+	const result = new Intl.DateTimeFormat("en-GB", {
+		day: "2-digit",
+		month: "short",
+		year: "numeric",
+		...options,
+	});
+	return result.format(new Date(date));
 }
 
 export function getScreenStatusTheme(status: ScreenStatus) {

@@ -11,6 +11,7 @@ function ScreensListFallback() {
 		<ul className="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
 			{Array.from({ length: 5 }).map((_, idx) => (
 				<li
+					// biome-ignore lint/suspicious/noArrayIndexKey: This is just a placeholder
 					key={idx}
 					className="relative flex justify-between gap-x-6 px-4 py-5 sm:px-6"
 				>

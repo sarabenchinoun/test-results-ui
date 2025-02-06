@@ -5,6 +5,7 @@ import {
 	BuildingOffice,
 	Calendar,
 	CalendarCheck,
+	CaretLeft,
 	CaretRight,
 	CheckCircle,
 	Circle,
@@ -23,6 +24,7 @@ import { cn } from "@/utils/cn";
 const Icons = {
 	"calendar-check": CalendarCheck,
 	"caret-right": CaretRight,
+	"caret-left": CaretLeft,
 	"check-circle": CheckCircle,
 	"dot-outline": DotOutline,
 	"first-aid-kit": FirstAidKit,

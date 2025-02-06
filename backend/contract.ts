@@ -6,7 +6,7 @@ export type ScreenStatus = "received" | "completed" | "pending-return";
 export type ScreenServiceLevel = "abnormal" | "normal" | "warning" | "issue";
 type ComponentType = "HIV" | "FINAL" | "SYPHILIS" | "CHLAMYDIA" | "GONORRHOEA";
 
-type SampleType =
+export type SampleType =
 	| "urine"
 	| "rectal-swab"
 	| "vaginal-swab"
@@ -96,7 +96,7 @@ type ScreenServiceRequest = {
 	results: ScreenServiceResult[];
 };
 
-type ScreenServiceResult = {
+export type ScreenServiceResult = {
 	resultId: number;
 	description?: string;
 	observationDate: string | null;

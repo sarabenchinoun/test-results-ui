@@ -1,7 +1,10 @@
 "use client";
 
+import { Card } from "@/components/card";
 import { Header, HeaderTitle } from "@/components/header";
+import { Icon } from "@/components/icon";
 import { Layout, LayoutContent } from "@/components/layout";
+import Link from "next/link";
 
 export default function ErrorPage({
 	reset,
@@ -12,19 +15,31 @@ export default function ErrorPage({
 	return (
 		<Layout>
 			<Header>
-				<HeaderTitle>Error</HeaderTitle>
+				<Link
+					href="/screens"
+					className="flex items-center gap-1 text-gray-600 text-sm hover:underline"
+				>
+					<Icon name="caret-left" className="size-3" />
+					Back
+				</Link>
+				<HeaderTitle className="mt-1">Error</HeaderTitle>
 			</Header>
 			<LayoutContent>
-				<div className="grid place-items-center overflow-hidden bg-white py-8 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-					<div className="text-center">
-						<p>Ooops...Something went wrong</p>
+				<Card className="p-6">
+					<p>
+						Opps... Something went wrong. We are unable to process your request
+						at the moment.
+					</p>
 
-						<p>Please try again</p>
-						<button type="button" onClick={() => reset()}>
-							Try again
-						</button>
-					</div>
-				</div>
+					<p>Please try again</p>
+					<button
+						type="button"
+						onClick={() => reset()}
+						className="mt-2 cursor-pointer text-info-text hover:underline"
+					>
+						Try again
+					</button>
+				</Card>
 			</LayoutContent>
 		</Layout>
 	);
