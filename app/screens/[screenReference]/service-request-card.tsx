@@ -30,10 +30,12 @@ function ServiceRequestCard({
 				"border-t-info-solid-bg": cardTheme === "info",
 			})}
 		>
-			<CardHeader className="flex-row justify-between px-4 py-3">
+			<CardHeader className="px-4 py-3 sm:flex-row sm:justify-between">
 				<div>
 					<CardTitle>{result.status} RESULT</CardTitle>
-					<CardDescription>Sample: {result.sampleType}</CardDescription>
+					<CardDescription className="mt-1 ">
+						Sample: {result.sampleType}
+					</CardDescription>
 				</div>
 				<div className="flex items-center gap-2">
 					<Badge variant="ghost" theme={cardTheme}>
@@ -46,20 +48,22 @@ function ServiceRequestCard({
 				</div>
 			</CardHeader>
 			<CardContent className="p-4">
-				<CardDescription>
-					Observation:{" "}
-					{result.observationDate
-						? formatDate(result.observationDate)
-						: "Unknown"}
-				</CardDescription>
-				<CardDescription>
-					Verification:{" "}
-					{result.verificationDate
-						? formatDate(result.verificationDate)
-						: "Unknown"}
-				</CardDescription>
+				<div className="gap-x-8 sm:flex">
+					<CardDescription>
+						Observation:{" "}
+						{result.observationDate
+							? formatDate(result.observationDate)
+							: "Unknown"}
+					</CardDescription>
+					<CardDescription>
+						Verification:{" "}
+						{result.verificationDate
+							? formatDate(result.verificationDate)
+							: "Unknown"}
+					</CardDescription>
+				</div>
 				{result.description ? (
-					<CardDescription className="mt-4 whitespace-pre-line">
+					<CardDescription className="mt-6 whitespace-pre-line">
 						{result.description}
 					</CardDescription>
 				) : null}

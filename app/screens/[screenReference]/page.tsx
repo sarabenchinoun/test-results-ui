@@ -193,7 +193,7 @@ function ServiceRequests({ data }: { data: ScreenDetailsResponse }) {
 
 		return (
 			<Card key={request.serviceRequestId}>
-				<CardHeader className="flex flex-row items-center justify-between gap-2 border-gray-200 border-b bg-gray-100 px-4 py-3">
+				<CardHeader className="flex flex-col gap-2 border-gray-200 border-b bg-gray-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
 					<CardTitle>{request.title}</CardTitle>
 					<CardDescription>Sample ID: #{request.sampleId}</CardDescription>
 				</CardHeader>
