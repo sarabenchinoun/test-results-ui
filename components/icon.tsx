@@ -1,5 +1,6 @@
 import type { IconProps as PhosphorIconProps } from "@phosphor-icons/react";
 import {
+	ArrowsClockwise,
 	Baby,
 	Barcode,
 	BuildingOffice,
@@ -35,6 +36,7 @@ const Icons = {
 	calendar: Calendar,
 	dot: Dot,
 	hourglass: HourglassMedium,
+	refresh: ArrowsClockwise,
 	package: Package,
 	tag: Tag,
 	user: User,

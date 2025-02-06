@@ -44,8 +44,9 @@ export default function ErrorPage({
 					<button
 						type="button"
 						onClick={reload}
-						className="mt-2 cursor-pointer text-info-text hover:underline"
+						className="mt-2 inline-flex cursor-pointer items-center gap-x-2 rounded-md bg-info-solid-bg px-2.5 py-1.5 font-semibold text-info-solid-text text-sm shadow-sm hover:bg-info-solid-bg/90 focus-visible:outline focus-visible:outline-danbg-info-solid-bg focus-visible:outline-offset-2"
 					>
+						<Icon name="refresh" className="size-4" aria-hidden="true" />
 						Try again
 					</button>
 				</Card>

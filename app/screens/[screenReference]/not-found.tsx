@@ -23,7 +23,11 @@ export default function NotFound() {
 						The screen you are looking for does not exist. Please check the URL
 						and try again.
 					</p>
-					<Link href="/screens" className="mt-2 text-info-text hover:underline">
+					<Link
+						href="/screens"
+						className="mt-2 inline-flex cursor-pointer items-center gap-x-2 rounded-md bg-info-solid-bg px-2.5 py-1.5 font-semibold text-info-solid-text text-sm shadow-sm hover:bg-info-solid-bg/90 focus-visible:outline focus-visible:outline-danbg-info-solid-bg focus-visible:outline-offset-2"
+					>
+						<Icon name="caret-left" className="size-4" aria-hidden="true" />
 						Back to Screens
 					</Link>
 				</Card>

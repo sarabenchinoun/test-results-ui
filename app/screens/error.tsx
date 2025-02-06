@@ -1,6 +1,8 @@
 "use client";
 
+import { Card } from "@/components/card";
 import { Header, HeaderTitle } from "@/components/header";
+import { Icon } from "@/components/icon";
 import { Layout, LayoutContent } from "@/components/layout";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
@@ -24,16 +26,22 @@ export default function ErrorPage({
 				<HeaderTitle>Screens</HeaderTitle>
 			</Header>
 			<LayoutContent>
-				<div className="grid place-items-center overflow-hidden bg-white py-8 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-					<div className="text-center">
-						<p>Ooops...Something went wrong</p>
+				<Card className="p-6">
+					<p>
+						Opps... Something went wrong. We are unable to process your request
+						at the moment.
+					</p>
 
-						<p>Please try again</p>
-						<button type="button" onClick={reload}>
-							Try again
-						</button>
-					</div>
-				</div>
+					<p>Please try again</p>
+					<button
+						type="button"
+						onClick={reload}
+						className="mt-2 inline-flex cursor-pointer items-center gap-x-2 rounded-md bg-info-solid-bg px-2.5 py-1.5 font-semibold text-info-solid-text text-sm shadow-sm hover:bg-info-solid-bg/90 focus-visible:outline focus-visible:outline-danbg-info-solid-bg focus-visible:outline-offset-2"
+					>
+						<Icon name="refresh" className="size-4" aria-hidden="true" />
+						Try again
+					</button>
+				</Card>
 			</LayoutContent>
 		</Layout>
 	);
