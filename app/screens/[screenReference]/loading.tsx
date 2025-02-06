@@ -1,3 +1,11 @@
+import * as React from "react";
+
+import { Card } from "@/components/card";
+import {
+	DescriptionDetails,
+	DescriptionList,
+	DescriptionTerm,
+} from "@/components/description-list";
 import { Header, HeaderTitle } from "@/components/header";
 import { Heading } from "@/components/heading";
 import { Layout, LayoutContent } from "@/components/layout";
@@ -17,7 +25,21 @@ export default function Loading() {
 							<Heading id="section-1-title" level={2}>
 								Loading Record Summary...
 							</Heading>
-							<Skeleton className="mt-2 h-50 w-full" />
+							<Card className="mt-2 px-4 py-2">
+								<DescriptionList>
+									{Array.from({ length: 10 }).map((_, idx) => (
+										<React.Fragment key={idx}>
+											<DescriptionTerm>
+												<Skeleton className="size-5" />
+												<Skeleton className="h-5 w-20" />
+											</DescriptionTerm>
+											<DescriptionDetails>
+												<Skeleton className="h-5 w-34" />
+											</DescriptionDetails>
+										</React.Fragment>
+									))}
+								</DescriptionList>
+							</Card>
 						</section>
 					}
 					rightColumn={

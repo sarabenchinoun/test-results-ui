@@ -22,6 +22,7 @@ import {
 	getServiceLevelIcon,
 	getServiceLevelTheme,
 } from "@/utils/helpers";
+import { Grid } from "./grid";
 
 interface ScreenProps {
 	params: Promise<{ screenReference: string }>;
@@ -50,27 +51,24 @@ export default async function Screen({ params }: ScreenProps) {
 			</Header>
 
 			<LayoutContent>
-				<div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
-					{/* Left column */}
-					<div className="grid grid-cols-1 gap-4 lg:col-span-1">
-						<section aria-labelledby="section-1-title">
+				<Grid
+					leftColumn={
+						<section aria-labelledby="section-1-title" className="space-y-2">
 							<Heading id="section-1-title" level={2}>
 								Record Summary
 							</Heading>
 							<RecordSummary data={screenData} />
 						</section>
-					</div>
-
-					{/* Right column */}
-					<div className="grid grid-cols-1 gap-4 lg:col-span-2">
-						<section aria-labelledby="section-2-title">
+					}
+					rightColumn={
+						<section aria-labelledby="section-2-title" className="space-y-2">
 							<Heading level={2} id="section-2-title">
 								Test Bookings
 							</Heading>
 							<ServiceRequests data={screenData} />
 						</section>
-					</div>
-				</div>
+					}
+				/>
 			</LayoutContent>
 		</Layout>
 	);
