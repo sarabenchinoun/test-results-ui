@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 
-export function Logo({ className, ...props }: React.ComponentProps<"svg">) {
+function Logo({ className, ...props }: React.ComponentProps<"svg">) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -71,3 +71,5 @@ export function Logo({ className, ...props }: React.ComponentProps<"svg">) {
 		</svg>
 	);
 }
+
+export { Logo };

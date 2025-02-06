@@ -14,7 +14,7 @@ const navigation = [
 	{ name: "Screens", href: "/screens" },
 ];
 
-export function Navbar() {
+function Navbar() {
 	return (
 		<nav className="border-gray-200 border-b bg-white">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -51,3 +51,5 @@ export function Navbar() {
 		</nav>
 	);
 }
+
+export { Navbar };

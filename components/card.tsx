@@ -5,7 +5,7 @@ interface CardProps {
 	className?: string;
 }
 
-export function Card({ children, className }: CardProps) {
+function Card({ children, className }: CardProps) {
 	return (
 		<div
 			className={cn("overflow-hidden rounded-lg bg-inverse shadow", className)}
@@ -15,7 +15,7 @@ export function Card({ children, className }: CardProps) {
 	);
 }
 
-export function CardHeader({ children, className }: CardProps) {
+function CardHeader({ children, className }: CardProps) {
 	return (
 		<div
 			className={cn(
@@ -27,3 +27,5 @@ export function CardHeader({ children, className }: CardProps) {
 		</div>
 	);
 }
+
+export { Card, CardHeader };

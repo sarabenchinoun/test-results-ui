@@ -9,7 +9,7 @@ interface NavLinkProps extends LinkProps {
 	children: React.ReactNode;
 }
 
-export function NavLink({ href, ...props }: NavLinkProps) {
+function NavLink({ href, ...props }: NavLinkProps) {
 	const isActive = useIsActive(href);
 
 	return (
@@ -41,3 +41,5 @@ function useIsActive(href: LinkProps["href"]) {
 
 	return pathname.startsWith(activePath);
 }
+
+export { NavLink };

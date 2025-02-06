@@ -40,8 +40,10 @@ interface BadgeProps
 	extends React.ComponentProps<"span">,
 		VariantProps<typeof badgeVariants> {}
 
-export function Badge({ className, theme, variant, ...props }: BadgeProps) {
+function Badge({ className, theme, variant, ...props }: BadgeProps) {
 	return (
 		<span className={badgeVariants({ theme, variant, className })} {...props} />
 	);
 }
+
+export { Badge };
