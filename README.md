@@ -14,6 +14,7 @@ A simple web application for displaying and managing test results.
 - TypeScript
 - Tailwind CSS 4
 - Biome
+- Vitest
 
 ## Getting Started
 
@@ -48,9 +49,16 @@ pnpm lint
 pnpm validate
 ```
 
+### Testing
+```bash
+# Run tests
+pnpm test
+```
+
 ## Project Structure
 ```
 ├── app/                # Next.js app directory
+│   └── **/*.test.tsx   # Co-located page tests
 ├── backend/            # Backend API and data handling
 ├── components/         # Reusable UI components
 ├── utils/              # Utility functions and helpers
@@ -74,6 +82,7 @@ pnpm validate
 
 - **UI Components**: I used libraries such as Shadcn and Tailwind UI for consistency and speed.
 
+- **Vitest**: I used Vitest for testing because It is very quick and easy to use and setup. [See here for more details](https://nextjs.org/docs/app/building-your-application/testing/vitest)
 
 ## Scripts
 
@@ -82,6 +91,7 @@ pnpm validate
 - `pnpm start` - Start the production server
 - `pnpm lint` - Run Biome checks
 - `pnpm lint:fix` - Run Biome checks and fix issues
+- `pnpm test` - Run tests
 - `pnpm typecheck` - Run TypeScript type checking
 - `pnpm validate` - Run all checks in parallel
 

@@ -81,9 +81,7 @@ export default async function Screen({ params }: ScreenProps) {
 	);
 }
 
-async function ScreenStatus({
-	status,
-}: { status: ScreenDetailsResponse["status"] }) {
+function ScreenStatus({ status }: { status: ScreenDetailsResponse["status"] }) {
 	if (!status) return null;
 	return (
 		<div className="flex items-center gap-x-1.5">

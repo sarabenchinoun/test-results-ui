@@ -45,7 +45,7 @@ function Navbar() {
 								>
 									<Avatar>
 										<AvatarFallback>{user.name.charAt(0) || ""}</AvatarFallback>
-										<AvatarImage src={user.imageUrl} />
+										<AvatarImage src={user.imageUrl} alt={user.name} />
 									</Avatar>
 								</button>
 							</div>
