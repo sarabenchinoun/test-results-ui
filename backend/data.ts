@@ -9,8 +9,6 @@ export const ConcreteScreenReferenceOne = "SR8704928";
 export const ConcreteScreenReferenceTwo = "SR870434897";
 export const ConcreteScreenReferenceThree = "SR835434098";
 
-export const Screens: ScreenListResponse[] = [];
-
 const now = new Date().getFullYear();
 
 const dateOfBirth = faker.date.birthdate();
@@ -301,3 +299,27 @@ export const ScreenDetailsThree: ScreenDetailsResponse = {
 		},
 	],
 };
+
+export const Screens: ScreenListResponse[] = [
+	{
+		updatedOn: ScreenDetailsOne.updatedOn,
+		kitBarcode: ScreenDetailsOne.kitBarcode,
+		status: ScreenDetailsOne.status ?? "pending-return",
+		screenReference: ScreenDetailsOne.screenReference,
+		serviceProviderName: ScreenDetailsOne.serviceProviderName,
+	},
+	{
+		updatedOn: ScreenDetailsTwo.updatedOn,
+		kitBarcode: ScreenDetailsTwo.kitBarcode,
+		status: ScreenDetailsTwo.status ?? "pending-return",
+		screenReference: ScreenDetailsTwo.screenReference,
+		serviceProviderName: ScreenDetailsTwo.serviceProviderName,
+	},
+	{
+		updatedOn: ScreenDetailsThree.updatedOn,
+		kitBarcode: ScreenDetailsThree.kitBarcode,
+		status: ScreenDetailsThree.status ?? "pending-return",
+		screenReference: ScreenDetailsThree.screenReference,
+		serviceProviderName: ScreenDetailsThree.serviceProviderName,
+	},
+];
