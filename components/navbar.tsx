@@ -16,7 +16,10 @@ const navigation = [
 
 function Navbar() {
 	return (
-		<nav className="border-gray-200 border-b bg-white">
+		<nav
+			className="border-gray-200 border-b bg-white"
+			aria-label="Main navigation"
+		>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="flex h-16 justify-between">
 					<div className="flex">
@@ -37,6 +40,8 @@ function Navbar() {
 								<button
 									className="relative flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 									type="button"
+									aria-label="Open user menu"
+									aria-haspopup="true"
 								>
 									<Avatar>
 										<AvatarFallback>{user.name.charAt(0) || ""}</AvatarFallback>

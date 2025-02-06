@@ -143,7 +143,7 @@ function RecordSummary({ data }: { data: ScreenDetailsResponse }) {
 							: "Not completed"}
 					</DescriptionDetails>
 
-					<Subheading level={4} className="my-2">
+					<Subheading level={3} className="my-2">
 						Patient Details
 					</Subheading>
 					<DescriptionTerm icon={<Icon name="user" />}>Name</DescriptionTerm>
