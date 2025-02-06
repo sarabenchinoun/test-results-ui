@@ -20,8 +20,6 @@
 	--color-warning-solid-text: var(--amber-1);
 	--color-info-solid-bg: var(--blue-2);
 	--color-info-solid-text: var(--blue-1);
-
-
 }
 
 /*
@@ -49,8 +47,5 @@
 		--amber-2: #a26107;
 		--blue-1: #f0f9ff;
 		--blue-2: #0369a0;
-
-		--black: #000000;
-		--white: #ffffff;
 	}
 }
