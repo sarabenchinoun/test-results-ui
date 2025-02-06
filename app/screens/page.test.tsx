@@ -1,10 +1,15 @@
 import { render } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import Page from "./page";
 import "@testing-library/jest-dom/vitest";
-import { ScreenDetailsOne } from "@/backend/data";
+import * as api from "@/backend/api";
+import { ScreenDetailsOne, Screens } from "@/backend/data";
+
+vi.mock("@/backend/api");
 
 test("Screens page renders with correct title and content", async () => {
+	vi.mocked(api.get).mockResolvedValue(Screens);
+
 	const Result = await Page();
 	const screen = render(Result);
 
@@ -29,4 +34,16 @@ test("Screens page renders with correct title and content", async () => {
 	expect(firstItem).toHaveTextContent(ScreenDetailsOne.screenReference);
 	expect(firstItem).toHaveTextContent(ScreenDetailsOne.kitBarcode);
 	expect(firstItem).toHaveTextContent(ScreenDetailsOne.updatedOn);
+});
+
+// This can be improve by adding more tests for handling error
+test("Screens page handles error correctly", async () => {
+	vi.mocked(api.get).mockRejectedValue(
+		new Error("An error occurred whilst retrieving the list of screens"),
+	);
+
+	const Result = Page();
+	await expect(Result).rejects.toThrow(
+		"An error occurred whilst retrieving the list of screens",
+	);
 });

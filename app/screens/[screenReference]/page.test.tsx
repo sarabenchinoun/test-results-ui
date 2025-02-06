@@ -1,12 +1,18 @@
 import { render } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import Page from "./page";
 import "@testing-library/jest-dom/vitest";
+import * as api from "@/backend/api";
 import { ScreenDetailsOne } from "@/backend/data";
 
-// This test may need multiple runs to pass: It is flaky due the random failure in the api call.
-// I didn't have time to cater for making them not flaky.
+vi.mock("@/backend/api");
+
 test("Screen page renders with correct title and content", async () => {
+	vi.mocked(api.getById).mockResolvedValue({
+		status: 200,
+		data: ScreenDetailsOne,
+	});
+
 	const Result = await Page({
 		params: Promise.resolve({
 			screenReference: String(ScreenDetailsOne.screenReference),
@@ -52,4 +58,37 @@ test("Screen page renders with correct title and content", async () => {
 		const sampleId = screen.getByText(`Sample ID: #${request.sampleId}`);
 		expect(sampleId).toBeInTheDocument();
 	}
+});
+// This can be improve by adding more tests for handling error
+test("Screen page handles 404 error correctly", async () => {
+	vi.mocked(api.getById).mockResolvedValue({
+		status: 404,
+		data: null,
+		message: "Screen not found",
+	});
+
+	const Result = Page({
+		params: Promise.resolve({
+			screenReference: "non-existent-screen",
+		}),
+	});
+
+	await expect(Result).rejects.toThrow();
+});
+
+// This can be improve by adding more tests for handling error
+test("Screen page handles server error correctly", async () => {
+	vi.mocked(api.getById).mockResolvedValue({
+		status: 500,
+		data: null,
+		message: "Server error",
+	});
+
+	const Result = Page({
+		params: Promise.resolve({
+			screenReference: "error-screen",
+		}),
+	});
+
+	await expect(Result).rejects.toThrow();
 });
